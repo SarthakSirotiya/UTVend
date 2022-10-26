@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/viewMapButton"
+        android:id="@+id/mapButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="View Map"
@@ -32,6 +32,6 @@
         android:text="Settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewMapButton" />
+        app:layout_constraintTop_toBottomOf="@+id/mapButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
