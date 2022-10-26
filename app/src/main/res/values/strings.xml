@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">UTVend</string>
     <string name="title_activity_google_map">GoogleMapActivity</string>
+    <string name="view_map">View Map</string>
+    <string name="login">Login</string>
+    <string name="settings">Settings</string>
 </resources>
