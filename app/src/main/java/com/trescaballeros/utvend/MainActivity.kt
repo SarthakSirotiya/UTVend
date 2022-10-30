@@ -1,8 +1,9 @@
 package com.trescaballeros.utvend
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.trescaballeros.utvend.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         // this is our main activity ! -Manuel T!
 
         binding.mapButton.setOnClickListener {
-            val intent = Intent(this, GoogleMapActivity::class.java)
+            val intent = Intent(this, MapActivity::class.java)
             startActivity(intent)
         }
 
@@ -28,5 +29,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
+
     }
+
 }
