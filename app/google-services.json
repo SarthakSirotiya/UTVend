@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "555194398840",
+    "project_id": "utvend-4f8cf",
+    "storage_bucket": "utvend-4f8cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:555194398840:android:d4413a93e22afeb10d958d",
+        "android_client_info": {
+          "package_name": "com.trescaballeros.utvend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "555194398840-6piq6r7ehjdgvi81qur078i3123qllkk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trescaballeros.utvend",
+            "certificate_hash": "8c1115d3eed52be9bd7a1def761734a3f5de1c1b"
+          }
+        },
+        {
+          "client_id": "555194398840-f81m63r8i6k0mu6vvl3grmp9cg0vt4ug.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtPw0v1lqCeNEU76uUWrCOwZ2duYGMmVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "555194398840-f81m63r8i6k0mu6vvl3grmp9cg0vt4ug.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

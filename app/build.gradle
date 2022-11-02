@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -47,10 +48,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     // import BoM for Firebase
-    implementation platform('com.google.firebase:firebase-bom:31.0.1')
+    implementation platform('com.google.firebase:firebase-bom:31.0.2')
     // add dependencies for Firebase
     implementation 'com.google.firebase:firebase-auth-ktx'
-    // TODO add dependency for firebase ui auth
     implementation 'com.google.firebase:firebase-firestore-ktx'
 
 
