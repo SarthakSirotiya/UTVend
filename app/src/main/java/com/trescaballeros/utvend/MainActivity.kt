@@ -14,7 +14,7 @@ import com.trescaballeros.utvend.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    val signInLauncher = registerForActivityResult(FirebaseAuthUIActivityResultContract()) { res ->
+    private val signInLauncher = registerForActivityResult(FirebaseAuthUIActivityResultContract()) { res ->
         onSignInResult(res)
     }
 
