@@ -35,9 +35,6 @@
             android:exported="false"
             android:label="@string/title_activity_google_map" />
         <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
-        <activity
             android:name=".SettingsActivity"
             android:exported="false" />
         <activity
