@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
         // this is our main activity ! -Manuel T!
         binding.mapButton.setOnClickListener {
-            val intent = Intent(this, MapActivity::class.java)
+            val intent = Intent(this, GoogleMapActivity::class.java)
             startActivity(intent)
         }
 
