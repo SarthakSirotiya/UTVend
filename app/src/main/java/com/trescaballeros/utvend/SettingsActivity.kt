@@ -7,5 +7,12 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+
+        // Lab3
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setTitle("SETTINGS") // TODO strings.xml spanish
+
     }
+
+
 }

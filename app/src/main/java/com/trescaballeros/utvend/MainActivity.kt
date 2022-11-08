@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         // this is our main activity ! -Manuel T!
+
         binding.mapButton.setOnClickListener {
             val intent = Intent(this, GoogleMapActivity::class.java)
             startActivity(intent)
@@ -38,6 +40,18 @@ class MainActivity : AppCompatActivity() {
             startSignInIntent()
         }
     }
+
+//    // this event will enable the back
+//    // function to the button on press
+//    override fun onContextItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            android.R.id.home -> {
+//                finish()
+//                return true
+//            }
+//        }
+//        return super.onContextItemSelected(item)
+//    }
 
     private fun startSignInIntent() {
         val providers = listOf(
