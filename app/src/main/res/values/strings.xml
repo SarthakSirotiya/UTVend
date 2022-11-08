@@ -7,4 +7,5 @@
     <string name="add">Add</string>
     <string name="list">List</string>
     <string name="map">Map</string>
+    <string name="user_pfp">Profile picture of current user</string>
 </resources>
