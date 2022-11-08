@@ -11,6 +11,8 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.trescaballeros.utvend.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -30,25 +32,19 @@ class MainActivity : AppCompatActivity() {
         binding.settingsButton.setOnClickListener {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
-            finish()
         }
 
-        binding.loginButton.setOnClickListener {
-            startSignInIntent()
+        binding.profileButton.setOnClickListener {
+            val user = Firebase.auth.currentUser
+            if (user == null) {
+                startSignInIntent()
+            }
+            else {
+                val intent = Intent(this, ProfileActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
-
-//    // this event will enable the back
-//    // function to the button on press
-//    override fun onContextItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            android.R.id.home -> {
-//                finish()
-//                return true
-//            }
-//        }
-//        return super.onContextItemSelected(item)
-//    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         finish()
