@@ -25,15 +25,12 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         // this is our main activity ! -Manuel T!
-
-        binding.mapButton.setOnClickListener {
-            val intent = Intent(this, GoogleMapActivity::class.java)
-            startActivity(intent)
-        }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding.settingsButton.setOnClickListener {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         binding.loginButton.setOnClickListener {
@@ -52,6 +49,11 @@ class MainActivity : AppCompatActivity() {
 //        }
 //        return super.onContextItemSelected(item)
 //    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        finish()
+        return super.onOptionsItemSelected(item)
+    }
 
     private fun startSignInIntent() {
         val providers = listOf(

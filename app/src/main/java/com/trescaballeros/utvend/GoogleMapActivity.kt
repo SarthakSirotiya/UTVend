@@ -1,10 +1,12 @@
 package com.trescaballeros.utvend
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.view.menu.MenuAdapter
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -26,7 +28,6 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
 
         // Lab3
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setTitle("MAP_MAP") // TODO strings.xml spanish
 
 
@@ -42,7 +43,22 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Toast.makeText(this, "Menu item selected", Toast.LENGTH_SHORT).show()
+        when (item.itemId) {
+            R.id.addButton -> {
+                Toast.makeText(this, "add item selected", Toast.LENGTH_SHORT).show()
+            }
+            R.id.listButton -> {
+                Toast.makeText(this, "list item selected", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MapActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            R.id.settingsButton -> {
+                Toast.makeText(this, "settings item selected", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
 
