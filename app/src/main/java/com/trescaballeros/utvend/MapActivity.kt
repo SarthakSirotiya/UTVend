@@ -1,11 +1,11 @@
 package com.trescaballeros.utvend
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 
 class MapActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +24,8 @@ class MapActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.addButton -> {
                 Toast.makeText(this, "add item selected", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, SubmitActivity::class.java)
+                startActivity(intent)
             }
             R.id.mapButton -> {
                 Toast.makeText(this, "list item selected", Toast.LENGTH_SHORT).show()

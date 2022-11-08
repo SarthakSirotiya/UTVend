@@ -1,13 +1,11 @@
 package com.trescaballeros.utvend
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.appcompat.view.menu.MenuAdapter
-
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -46,6 +44,8 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         when (item.itemId) {
             R.id.addButton -> {
                 Toast.makeText(this, "add item selected", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, SubmitActivity::class.java)
+                startActivity(intent)
             }
             R.id.listButton -> {
                 Toast.makeText(this, "list item selected", Toast.LENGTH_SHORT).show()
