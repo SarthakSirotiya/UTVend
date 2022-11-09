@@ -2,12 +2,10 @@ package com.trescaballeros.utvend
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -15,7 +13,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.ktx.toObject
 import com.trescaballeros.utvend.databinding.ActivityGoogleMapBinding
 import com.trescaballeros.utvend.model.VendingMachine
@@ -69,7 +66,6 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
 
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -85,15 +81,22 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         loadVendingMachines(mMap)
         mMap.moveCamera(CameraUpdateFactory.newLatLng(utAustin))
         mMap.moveCamera(CameraUpdateFactory.zoomTo(15F))
+        mMap.setOnMarkerClickListener { marker ->
+            Toast.makeText(this, (marker.tag as VendingMachine).id, Toast.LENGTH_SHORT).show()
+            // TODO view vending machine info on click
+            true
+        }
     }
 
-    private fun loadVendingMachines(map: GoogleMap){
+    private fun loadVendingMachines(map: GoogleMap) {
         FirebaseFirestore.getInstance().collection("vms_1").get()
-            .addOnSuccessListener {result ->
+            .addOnSuccessListener { result ->
                 for (document in result) {
                     val vm = document.toObject<VendingMachine>()
+                    vm.id = document.id
                     val coords = LatLng(vm.location.latitude, vm.location.longitude)
-                    map.addMarker(MarkerOptions().position(coords))
+                    val marker = map.addMarker(MarkerOptions().position(coords))
+                    marker?.tag = vm
                 }
             }
     }
