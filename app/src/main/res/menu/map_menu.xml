@@ -10,10 +10,15 @@
         android:id="@+id/listButton"
         android:icon="@drawable/ic_baseline_view_list_24"
         android:title="@string/list"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/profileButton"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="@string/profile"
+        app:showAsAction="never" />
     <item
         android:id="@+id/settingsButton"
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="@string/settings"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
 </menu>

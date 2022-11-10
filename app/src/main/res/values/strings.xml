@@ -8,4 +8,5 @@
     <string name="list">List</string>
     <string name="map">Map</string>
     <string name="user_pfp">Profile picture of current user</string>
+    <string name="profile">Profile</string>
 </resources>
