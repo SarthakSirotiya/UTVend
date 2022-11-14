@@ -1,14 +1,29 @@
 package com.trescaballeros.utvend
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.location.Location
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.Settings
+import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
+import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+//import androidx.core.location.LocationManagerCompat.isLocationEnabled
+//import androidx.core.location.LocationManagerCompat.getCurrentLocation
 import coil.load
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
@@ -30,7 +45,93 @@ class SubmitActivity : AppCompatActivity(){
 //    private lateinit var tvGpsLocation: TextView
 //    private val locationPermissionCode = 2
 
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private var myLat: Double = 0.0
+    private var myLng: Double = 0.0
 
+
+
+    private fun getCurrentLocation() {
+        if(checkPermissions()){
+            if(isLocationEnabled()){
+                //final lat and lng code here
+                Log.e("hello" , "world")
+
+                if(ActivityCompat.checkSelfPermission(
+                  this,
+                  android.Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        this,
+                        android.Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED){
+                    requestPermission()
+                    return
+                }
+
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener(this) {
+                    task->val location:Location?=task.result
+                    if(location == null){
+                        Toast.makeText(applicationContext,"Null Recieved", Toast.LENGTH_SHORT).show()
+                    }else {
+                        Toast.makeText(applicationContext, "Get Success", Toast.LENGTH_SHORT).show()
+                        myLat = location.latitude
+                        myLng = location.longitude
+                    }
+                }
+            } else {
+                //setting open here
+                Toast.makeText(applicationContext, "Turn on location", Toast.LENGTH_SHORT).show()
+                val intent=Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(intent)
+            }
+        }else {
+            //request permission here
+            requestPermission()
+        }
+
+
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        val locationManager:LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)||locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
+
+    private fun checkPermissions(): Boolean {
+        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            return true
+        }
+        return false
+    }
+
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(
+            this, arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                android.Manifest.permission.ACCESS_FINE_LOCATION),
+            PERMISSION_REQUEST_ACCESS_LOCATION
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == PERMISSION_REQUEST_ACCESS_LOCATION) {
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                //DISPLAY TO USER THAT PERMISSION WAS GRANTED TOAST?
+                Toast.makeText(applicationContext, "Granted", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(applicationContext, "Denied", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    companion object {
+        private const val PERMISSION_REQUEST_ACCESS_LOCATION=100
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +140,8 @@ class SubmitActivity : AppCompatActivity(){
         setContentView(binding.root)
         setTitle("Submit")
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        getCurrentLocation()
         binding.selectButton.setOnClickListener {
             val getIntent = Intent(Intent.ACTION_GET_CONTENT)
             getIntent.setType("image/*")
@@ -62,51 +163,36 @@ class SubmitActivity : AppCompatActivity(){
 
         binding.submitButton.setOnClickListener {
             val uniqueID = UUID.randomUUID().toString()
-            val badGeo = GeoPoint(0.0,0.0)
+            var badGeo = GeoPoint(0.0,0.0)
             val geoNotes = binding.geoNotesEditText.getText().toString()
             val extraNotes = binding.extraNotesEditText.getText().toString()
             val curTime = Timestamp.now()
             //val newVM = VendingMachine(uniqueID, badGeo, uniqueID, binding.geoNotesEditText.getText().toString(), binding.extraNotesEditText.getText().toString(), Timestamp.now(), )
 
+            getCurrentLocation()
+            badGeo = GeoPoint(myLat, myLng)
+
+            //fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+            //getCurrentLocation()
+
             val newVM = hashMapOf(
                 "extra_notes" to extraNotes,
                 "geo_notes" to geoNotes,
-                "image" to uniqueID + ".jpg",
-                "location" to GeoPoint(0.0, 0.0),
+                "image" to uniqueID + ".jpeg",
+                "location" to badGeo,
                 "timestamp" to Timestamp(Date())
             )
 
             FirebaseFirestore.getInstance().collection("vms_1").document(uniqueID).set(newVM)
-
             val storage = Firebase.storage
             // Create a storage reference from our app
             val storageRef = storage.reference
-//
-//            // Create a reference with an initial file path and name
-//            val pathReference = storageRef.child("images/Sunrise_On_Rails.jpg")
-//
-//            // Create a reference to a file from a Google Cloud Storage URI
-//            val gsReference = storage.getReferenceFromUrl("gs://bucket/images/Sunrise_On_Rails.jpg")
-//
-////            // Create a reference from an HTTPS URL
-////            // Note that in the URL, characters are URL escaped!
-////            val httpsReference = storage.getReferenceFromUrl(
-////                "https://firebasestorage.googleapis.com/b/bucket/o/images%20stars.jpg")
-//            val ONE_MEGABYTE: Long = 1024 * 1024
-//            pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener {
-//                // Data for "images/island.jpg" is returned, use this as needed
-//                binding.submitImageView.load(ONE_MEGABYTE)
-//            }.addOnFailureListener {
-//                // Handle any errors
-//            }
-
-
 
             // Create a reference to "mountains.jpg"
-            val mountainsRef = storageRef.child(uniqueID+".jpg")
+            val mountainsRef = storageRef.child(uniqueID+".jpeg")
 
             // Create a reference to 'images/mountains.jpg'
-            val mountainImagesRef = storageRef.child("images/"+uniqueID+".jpg")
+            val mountainImagesRef = storageRef.child("images/"+uniqueID+".jpeg")
 
             // Get the data from an ImageView as bytes
 //            binding.submitImageView.isDrawingCacheEnabled = true

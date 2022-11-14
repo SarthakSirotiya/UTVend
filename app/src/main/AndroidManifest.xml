@@ -3,9 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.trescaballeros.utvend">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 <!--    Line below allows phone to read storage on device- HT-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
 
     <uses-feature android:name="android.hardware.camera.any" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -13,10 +16,12 @@
         android:maxSdkVersion="28" />
 
 <!--    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"
-        tools:ignore="CoarseFineLocation"/>
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
+<!--    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"-->
+<!--        tools:ignore="CoarseFineLocation"/>-->
+<!--    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />-->
+<!--    <uses-permission android:name="android.permission.INTERNET" />-->
+
+
 
     <application
         android:allowBackup="true"
