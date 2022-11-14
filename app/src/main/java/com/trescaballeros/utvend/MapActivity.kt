@@ -24,7 +24,7 @@ class MapActivity : AppCompatActivity() {
 
     // XXX START
     // DO NOT DELETE -Manuel
-    private lateinit var myAdapter: VendingMachineAdapter
+    lateinit var myAdapter: VendingMachineAdapter
     // XXX END
 
     private val signInLauncher =
@@ -33,9 +33,12 @@ class MapActivity : AppCompatActivity() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.e("ON CREATE", "FIRST")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
         setTitle("LIST_LIST") // TODO strings.xml spanish
+
+        Log.e("OPTIONS", "BEFORE")
 
         // XXX START
         // DO NOT DELETE -Manuel
@@ -46,15 +49,14 @@ class MapActivity : AppCompatActivity() {
         = FirestoreRecyclerOptions.Builder<JavaVendingMachine>().setQuery(query, JavaVendingMachine::class.java).build()
 
         // Create VendingMachineAdapter (FirestoreRecyclerAdapter)
+        Log.e("Options", "After")
 
         myAdapter = VendingMachineAdapter(this, options)
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_id)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true) // maybe remove this
         recyclerView.adapter = myAdapter
-        setTitle("list num: " + myAdapter.itemCount)
-//
-//        setTitle("getItemCt: " + myAdapter.getItemCount())
+        setTitle("list num: " +  myAdapter.itemCount)
         // XXX END
 
 
@@ -64,14 +66,20 @@ class MapActivity : AppCompatActivity() {
     // XXX START
     // DO NOT DELETE -Manuel
     override fun onStart() {
+        Log.e("ON START", "BEFORE")
         super.onStart()
         myAdapter.startListening()
+        Log.e("ON START", "AFTER")
     }
 
     // XXX
     override fun onStop() {
+        Log.e("ON STOP", "BEFORE")
         super.onStop()
         myAdapter.stopListening()
+        myAdapter.notifyDataSetChanged() // slightly innefficient
+        // "more specific change events"
+    //        Log.e("ON STOP", "AFTER")
     }
     // XXX END
 
