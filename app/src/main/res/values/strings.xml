@@ -9,4 +9,9 @@
     <string name="map">Map</string>
     <string name="user_pfp">Profile picture of current user</string>
     <string name="profile">Profile</string>
+    <string name="vm_img_desc">Image of vending machine</string>
+    <string name="directions_icon">directions icon</string>
+    <string name="timestamp">timestamp</string>
+    <string name="extra_notes">extra_notes</string>
+    <string name="geo_notes">geo_notes</string>
 </resources>

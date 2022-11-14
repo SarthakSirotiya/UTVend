@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
+import com.google.gson.GsonBuilder
 import com.trescaballeros.utvend.databinding.ActivityGoogleMapBinding
 import com.trescaballeros.utvend.model.VendingMachine
 
@@ -103,8 +104,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 val user = FirebaseAuth.getInstance().currentUser
                 if (user == null) {
                     startSignInIntent()
-                }
-                else {
+                } else {
                     val intent = Intent(this, ProfileActivity::class.java)
                     startActivity(intent)
                 }
@@ -130,6 +130,14 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.setInfoWindowAdapter(VMInfoWindow(this))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(utAustin))
         mMap.moveCamera(CameraUpdateFactory.zoomTo(15F))
+        mMap.setOnInfoWindowClickListener { marker ->
+            val gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+            val vm = marker.tag as VendingMachine
+            val viewIntent = Intent(this, ViewActivity::class.java)
+            val json = gson.toJson(vm)
+            viewIntent.putExtra("vm", json)
+            startActivity(viewIntent)
+        }
     }
 
     private fun loadVendingMachines() {

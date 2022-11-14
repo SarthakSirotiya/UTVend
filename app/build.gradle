@@ -84,4 +84,7 @@ dependencies {
     implementation "androidx.camera:camera-extensions:${camerax_version}"
     implementation "com.google.android.gms:play-services-location:21.0.1"
 
+    // add gson to pass objects around in intents
+    implementation 'com.google.code.gson:gson:2.10'
+
 }
