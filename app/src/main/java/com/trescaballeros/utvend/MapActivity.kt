@@ -33,12 +33,9 @@ class MapActivity : AppCompatActivity() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.e("ON CREATE", "FIRST")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
         setTitle("LIST_LIST") // TODO strings.xml spanish
-
-        Log.e("OPTIONS", "BEFORE")
 
         // XXX START
         // DO NOT DELETE -Manuel
@@ -48,8 +45,6 @@ class MapActivity : AppCompatActivity() {
         val options: FirestoreRecyclerOptions<JavaVendingMachine>
         = FirestoreRecyclerOptions.Builder<JavaVendingMachine>().setQuery(query, JavaVendingMachine::class.java).build()
 
-        // Create VendingMachineAdapter (FirestoreRecyclerAdapter)
-        Log.e("Options", "After")
 
         myAdapter = VendingMachineAdapter(this, options)
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_id)
@@ -66,20 +61,16 @@ class MapActivity : AppCompatActivity() {
     // XXX START
     // DO NOT DELETE -Manuel
     override fun onStart() {
-        Log.e("ON START", "BEFORE")
         super.onStart()
         myAdapter.startListening()
-        Log.e("ON START", "AFTER")
     }
 
     // XXX
     override fun onStop() {
-        Log.e("ON STOP", "BEFORE")
         super.onStop()
         myAdapter.stopListening()
         myAdapter.notifyDataSetChanged() // slightly innefficient
         // "more specific change events"
-    //        Log.e("ON STOP", "AFTER")
     }
     // XXX END
 
