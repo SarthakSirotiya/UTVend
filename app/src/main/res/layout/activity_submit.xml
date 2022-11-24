@@ -7,7 +7,7 @@
     tools:context=".SubmitActivity">
 
     <Button
-        android:id="@+id/submitButton"
+        android:id="@+id/submitSubmitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="false"
@@ -17,35 +17,35 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/selectButton"
+        android:id="@+id/submitSelectButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Select an image"
-        app:layout_constraintBottom_toTopOf="@+id/submitButton"
+        app:layout_constraintBottom_toTopOf="@+id/submitSubmitButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/geoNotesEditText"
+        android:id="@+id/submitGeoNotesEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:enabled="false"
         android:gravity="start|top"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@+id/extraNotesEditText"
+        app:layout_constraintBottom_toTopOf="@+id/submitExtraNotesEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/extraNotesEditText"
+        android:id="@+id/submitExtraNotesEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:enabled="false"
         android:gravity="start|top"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@+id/selectButton"
+        app:layout_constraintBottom_toTopOf="@+id/submitSelectButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -58,7 +58,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/geoNotesEditText"
+        app:layout_constraintBottom_toTopOf="@+id/submitGeoNotesEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

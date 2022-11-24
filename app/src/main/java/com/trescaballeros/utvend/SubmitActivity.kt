@@ -142,7 +142,7 @@ class SubmitActivity : AppCompatActivity(){
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         getCurrentLocation()
-        binding.selectButton.setOnClickListener {
+        binding.submitSelectButton.setOnClickListener {
             val getIntent = Intent(Intent.ACTION_GET_CONTENT)
             getIntent.setType("image/*")
             //getIntent.setAction(Intent.ACTION_GET_CONTENT)
@@ -161,11 +161,11 @@ class SubmitActivity : AppCompatActivity(){
 
         }
 
-        binding.submitButton.setOnClickListener {
+        binding.submitSubmitButton.setOnClickListener {
             val uniqueID = UUID.randomUUID().toString()
             var badGeo = GeoPoint(0.0,0.0)
-            val geoNotes = binding.geoNotesEditText.getText().toString()
-            val extraNotes = binding.extraNotesEditText.getText().toString()
+            val geoNotes = binding.submitGeoNotesEditText.getText().toString()
+            val extraNotes = binding.submitExtraNotesEditText.getText().toString()
             val curTime = Timestamp.now()
             //val newVM = VendingMachine(uniqueID, badGeo, uniqueID, binding.geoNotesEditText.getText().toString(), binding.extraNotesEditText.getText().toString(), Timestamp.now(), )
 
@@ -226,21 +226,21 @@ class SubmitActivity : AppCompatActivity(){
 
                 val selectedImage = data?.getData()
                 binding.submitImageView.load(selectedImage)
-                binding.submitButton.isEnabled = true
-                binding.geoNotesEditText.isEnabled = true
-                binding.geoNotesEditText.setHint("Put geo notes here")
-                binding.extraNotesEditText.isEnabled = true
-                binding.extraNotesEditText.setHint("Put extra notes here")
+                binding.submitSubmitButton.isEnabled = true
+                binding.submitGeoNotesEditText.isEnabled = true
+                binding.submitGeoNotesEditText.setHint("Put geo notes here")
+                binding.submitExtraNotesEditText.isEnabled = true
+                binding.submitExtraNotesEditText.setHint("Put extra notes here")
             }
         } else if(requestCode == 1) {
             if(resultCode == RESULT_OK) {
                 val selectedImage = data?.getData()
                 binding.submitImageView.load(selectedImage)
-                binding.submitButton.isEnabled = true
-                binding.geoNotesEditText.isEnabled = true
-                binding.geoNotesEditText.setHint("Put geo notes here")
-                binding.extraNotesEditText.isEnabled = true
-                binding.extraNotesEditText.setHint("Put extra notes here")
+                binding.submitSubmitButton.isEnabled = true
+                binding.submitGeoNotesEditText.isEnabled = true
+                binding.submitGeoNotesEditText.setHint("Put geo notes here")
+                binding.submitExtraNotesEditText.isEnabled = true
+                binding.submitExtraNotesEditText.setHint("Put extra notes here")
             }
         }
     }
