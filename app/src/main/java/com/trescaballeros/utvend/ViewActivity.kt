@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.MenuItem
+import androidx.core.widget.addTextChangedListener
 import coil.load
 import com.bumptech.glide.Glide
 import com.google.firebase.ktx.Firebase
@@ -81,6 +82,14 @@ class ViewActivity : AppCompatActivity() {
             startActivityForResult(chooserIntent, PICK_IMAGE)
 
 
+        }
+
+        binding.viewGeoNotesEditText.addTextChangedListener {
+            binding.viewSubmitButton.isEnabled = true
+        }
+
+        binding.viewExtraNotesEditText.addTextChangedListener {
+            binding.viewSubmitButton.isEnabled = true
         }
 
     }
