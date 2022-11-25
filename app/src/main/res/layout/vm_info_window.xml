@@ -8,8 +8,8 @@
     <ImageView
         android:id="@+id/vmImageView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="false"
+        android:layout_height="250dp"
+        android:adjustViewBounds="true"
         android:contentDescription="Image of vending machine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

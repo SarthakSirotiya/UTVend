@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import coil.ImageLoader
 import coil.request.ImageRequest
 import com.firebase.ui.auth.AuthUI
@@ -27,6 +28,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.google.gson.GsonBuilder
 import com.trescaballeros.utvend.databinding.ActivityGoogleMapBinding
 import com.trescaballeros.utvend.model.VendingMachine
@@ -146,24 +149,30 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun loadVendingMachines() {
-        val defaultImage = "https://media.istockphoto.com/id/1026540906/photo/students-" +
-                "couple.jpg?s=612x612&w=0&k=20&c=8ZROdXvd2eMEGYmYSf_j9M_KB3TG3utGj9-D_UME6cs="
         val loader = ImageLoader(this)
+        val storageRef = Firebase.storage.reference
         FirebaseFirestore.getInstance().collection("vms_1").get()
             .addOnSuccessListener { result ->
                 for (document in result) {
+                    Log.d("vm_map", document.toString())
                     val vm = document.toObject<VendingMachine>()
                     vm.id = document.id
+                    vm.drawable =
+                        AppCompatResources.getDrawable(this, R.drawable.vending_machine_loading)
+                    val imageRef = storageRef.child(vm.image)
                     val coords = LatLng(vm.location.latitude, vm.location.longitude)
                     val marker = mMap.addMarker(MarkerOptions().position(coords))
-                    val req = ImageRequest.Builder(this)
-                        .data(defaultImage) // TODO get image url from vending machine object
-                        .allowHardware(false)
-                        .target { drawable ->
-                            vm.drawable = drawable
-                        }
-                        .build()
-                    loader.enqueue(req)
+                    imageRef.downloadUrl.addOnSuccessListener { uri ->
+                        val req = ImageRequest.Builder(this)
+                            // get image url from vending machine object
+                            .data(uri)
+                            .allowHardware(false)
+                            .target { drawable ->
+                                vm.drawable = drawable
+                            }
+                            .build()
+                        loader.enqueue(req)
+                    }
                     marker?.tag = vm
                 }
             }
