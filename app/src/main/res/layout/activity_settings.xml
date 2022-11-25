@@ -7,21 +7,21 @@
     tools:context=".SettingsActivity">
 
     <Button
-        android:id="@+id/lightDarkButton"
+        android:id="@+id/themeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Light/Dark"
+        android:text="Change Theme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/englishSpanishButton"
+        android:id="@+id/languageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="English/Spanish"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lightDarkButton" />
+        app:layout_constraintTop_toBottomOf="@+id/themeButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>
