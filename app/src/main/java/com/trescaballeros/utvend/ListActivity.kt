@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.trescaballeros.utvend.adapter.VendingMachineAdapter
+import com.trescaballeros.utvend.databinding.ActivityListBinding
 import com.trescaballeros.utvend.model.JavaVendingMachine
 
 class ListActivity : AppCompatActivity() {
@@ -31,11 +32,13 @@ class ListActivity : AppCompatActivity() {
         registerForActivityResult(FirebaseAuthUIActivityResultContract()) { res ->
             onSignInResult(res)
         }
-
+    private lateinit var binding: ActivityListBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_map)
+        setContentView(R.layout.activity_list)
         setTitle("LIST_LIST") // TODO strings.xml spanish
+        binding = ActivityListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // XXX START
         // DO NOT DELETE -Manuel
@@ -47,14 +50,23 @@ class ListActivity : AppCompatActivity() {
 
 
         myAdapter = VendingMachineAdapter(this, options)
-        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_id)
+        val recyclerView = binding.recyclerViewId
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true) // maybe remove this
         recyclerView.adapter = myAdapter
         setTitle("list num: " +  myAdapter.itemCount)
         // XXX END
 
-
+        binding.floatingButton.setOnClickListener {
+            if (FirebaseAuth.getInstance().currentUser != null) {
+                Toast.makeText(this, "add item selected", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, SubmitActivity::class.java)
+                startActivity(intent)
+            }
+            else {
+                Toast.makeText(this, "Please log in first.", Toast.LENGTH_SHORT).show()
+            }
+        }
 
     }
 
@@ -81,16 +93,6 @@ class ListActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.addButton -> {
-                if (FirebaseAuth.getInstance().currentUser != null) {
-                    Toast.makeText(this, "add item selected", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, SubmitActivity::class.java)
-                    startActivity(intent)
-                }
-                else {
-                    Toast.makeText(this, "Please log in first.", Toast.LENGTH_SHORT).show()
-                }
-            }
             R.id.mapButton -> {
                 Toast.makeText(this, "list item selected", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, GoogleMapActivity::class.java)

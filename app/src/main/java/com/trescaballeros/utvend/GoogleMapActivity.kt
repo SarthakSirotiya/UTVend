@@ -70,8 +70,18 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
 
         // Lab3
-        setTitle("MAP_MAP") // TODO strings.xml spanish
+        title = "Map" // TODO strings.xml spanish
 
+        binding.floatingButton.setOnClickListener {
+            if (FirebaseAuth.getInstance().currentUser != null) {
+                Toast.makeText(this, "add item selected", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, SubmitActivity::class.java)
+                startActivity(intent)
+            }
+            else {
+                Toast.makeText(this, "Please log in first.", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
@@ -86,16 +96,6 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.addButton -> {
-                if (FirebaseAuth.getInstance().currentUser != null) {
-                    Toast.makeText(this, "add item selected", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, SubmitActivity::class.java)
-                    startActivity(intent)
-                }
-                else {
-                    Toast.makeText(this, "Please log in first.", Toast.LENGTH_SHORT).show()
-                }
-            }
             R.id.listButton -> {
                 Toast.makeText(this, "list item selected", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, ListActivity::class.java)
