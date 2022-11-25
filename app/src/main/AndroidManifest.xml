@@ -99,7 +99,7 @@
             android:name=".SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".MapActivity"
+            android:name=".ListActivity"
             android:exported="false" />
     </application>
 

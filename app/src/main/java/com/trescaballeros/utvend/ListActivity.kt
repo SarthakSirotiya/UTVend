@@ -20,7 +20,7 @@ import com.google.firebase.firestore.Query
 import com.trescaballeros.utvend.adapter.VendingMachineAdapter
 import com.trescaballeros.utvend.model.JavaVendingMachine
 
-class MapActivity : AppCompatActivity() {
+class ListActivity : AppCompatActivity() {
 
     // XXX START
     // DO NOT DELETE -Manuel
