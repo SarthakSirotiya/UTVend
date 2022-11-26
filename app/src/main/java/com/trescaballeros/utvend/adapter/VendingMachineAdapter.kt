@@ -26,6 +26,7 @@ class VendingMachineAdapter(private val context: Context, val options: Firestore
     : FirestoreRecyclerAdapter<JavaVendingMachine, VendingMachineAdapter.VendingMachineViewHolder>(options) {
 
     private val gson = Gson()
+    val storageRef = Firebase.storage.reference
 
     class VendingMachineViewHolder(private val view: View?): RecyclerView.ViewHolder(view!!) {
         var myView = view
@@ -57,11 +58,7 @@ class VendingMachineAdapter(private val context: Context, val options: Firestore
         holder.extraTextView?.text = "Notes: " + model.extra_notes
         holder.timeTextView?.text = "Image Taken: "+model.timestamp.toDate().toString()
 
-        val storage = Firebase.storage
-        val storageRef = storage.reference
         val pathRef = storageRef.child(model.image)
-        val imageBytes: Long = 1024*1024*12
-        val byteArray = arrayOf<Byte>()
 
         pathRef.downloadUrl.addOnSuccessListener { uri ->
             holder.imageView?.load(uri)
