@@ -97,18 +97,15 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.listButton -> {
-                Toast.makeText(this, "list item selected", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, ListActivity::class.java)
                 startActivity(intent)
                 finish()
             }
             R.id.settingsButton -> {
-                Toast.makeText(this, "settings item selected", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, SettingsActivity::class.java)
                 startActivity(intent)
             }
             R.id.profileButton -> {
-                Toast.makeText(this, "profile item selected", Toast.LENGTH_SHORT).show()
                 val user = FirebaseAuth.getInstance().currentUser
                 if (user == null) {
                     startSignInIntent()
@@ -133,7 +130,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        val utAustin = LatLng(30.2849, -97.7341)
+        val utAustin = LatLng(30.2862815,-97.7370414)
         loadVendingMachines()
         mMap.setInfoWindowAdapter(VMInfoWindow(this))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(utAustin))

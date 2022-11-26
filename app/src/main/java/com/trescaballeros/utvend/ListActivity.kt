@@ -9,7 +9,6 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
@@ -94,18 +93,15 @@ class ListActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.mapButton -> {
-                Toast.makeText(this, "list item selected", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, GoogleMapActivity::class.java)
                 startActivity(intent)
                 finish()
             }
             R.id.settingsButton -> {
-                Toast.makeText(this, "settings item selected", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, SettingsActivity::class.java)
                 startActivity(intent)
             }
             R.id.profileButton -> {
-                Toast.makeText(this, "profile item selected", Toast.LENGTH_SHORT).show()
                 val user = FirebaseAuth.getInstance().currentUser
                 if (user == null) {
                     startSignInIntent()
