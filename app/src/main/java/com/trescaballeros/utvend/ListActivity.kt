@@ -58,7 +58,6 @@ class ListActivity : AppCompatActivity() {
 
         binding.floatingButton.setOnClickListener {
             if (FirebaseAuth.getInstance().currentUser != null) {
-                Toast.makeText(this, "add item selected", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, SubmitActivity::class.java)
                 startActivity(intent)
             }
