@@ -2,26 +2,30 @@ package com.trescaballeros.utvend.adapter
 
 // XXX START
 // DO NOT DELETE -Manuel
+
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-
-import com.trescaballeros.utvend.R
-import com.trescaballeros.utvend.model.JavaVendingMachine
-
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.google.gson.Gson
+import com.trescaballeros.utvend.R
+import com.trescaballeros.utvend.ViewActivity
+import com.trescaballeros.utvend.model.JavaVendingMachine
 
 class VendingMachineAdapter(private val context: Context, val options: FirestoreRecyclerOptions<JavaVendingMachine>)
     : FirestoreRecyclerAdapter<JavaVendingMachine, VendingMachineAdapter.VendingMachineViewHolder>(options) {
+
+    private val gson = Gson()
 
     class VendingMachineViewHolder(private val view: View?): RecyclerView.ViewHolder(view!!) {
         var myView = view
@@ -59,13 +63,16 @@ class VendingMachineAdapter(private val context: Context, val options: Firestore
         val imageBytes: Long = 1024*1024*12
         val byteArray = arrayOf<Byte>()
 
-        pathRef.getBytes(imageBytes).addOnSuccessListener {
-//            holder.imageView?.load(imageBytes)
-
-            val bmp = BitmapFactory.decodeByteArray(it,0, it.size)
-            holder.imageView!!.setImageBitmap(Bitmap.createScaledBitmap(bmp, holder.imageView!!.width, holder.imageView!!.height, false))
+        pathRef.downloadUrl.addOnSuccessListener { uri ->
+            holder.imageView?.load(uri)
         }
 
+        holder.myView?.setOnClickListener {
+            Toast.makeText(context, model.timestamp.toString(), Toast.LENGTH_SHORT).show()
+            val intent = Intent(context, ViewActivity::class.java)
+            intent.putExtra("vm", gson.toJson(model))
+            context.startActivity(intent)
+        }
     }
 
     override fun onDataChanged() {
