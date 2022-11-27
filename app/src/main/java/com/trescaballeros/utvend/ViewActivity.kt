@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import android.location.LocationManager
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -25,8 +24,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.trescaballeros.utvend.databinding.ActivityViewBinding
+import com.trescaballeros.utvend.model.GeopointSerializer
+import com.trescaballeros.utvend.model.TimestampSerializer
 import com.trescaballeros.utvend.model.VendingMachine
 import java.io.ByteArrayOutputStream
 import java.util.*
@@ -134,28 +135,15 @@ class ViewActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = "Details"
-        val gson = Gson()
+        val gson = GsonBuilder()
+            .registerTypeAdapter(Timestamp::class.java, TimestampSerializer())
+            .registerTypeAdapter(GeoPoint::class.java, GeopointSerializer())
+            .create()
         val vm: VendingMachine = gson.fromJson(intent.extras?.getString("vm"),
             VendingMachine::class.java) as VendingMachine
-//        val defaultImage = "https://media.istockphoto.com/id/1026540906/photo/students-" +
-//                "couple.jpg?s=612x612&w=0&k=20&c=8ZROdXvd2eMEGYmYSf_j9M_KB3TG3utGj9-D_UME6cs="
-//        binding.vmImageView.load(defaultImage)
-//        binding.geoNotesTextView.text = vm.geo_notes
-//        binding.extraNotesTextView.text = vm.extra_notes
-//        val timestampString = "Last edited at ${vm.timestamp}"
-//        binding.timestampTextView.text = timestampString
-//        binding.directionsButton.setOnClickListener {
-//            val uri = Uri.parse("google.navigation:q=${vm.location.latitude}," +
-//                    "${vm.location.longitude}&mode=w")
-//            val mapIntent = Intent(Intent.ACTION_VIEW, uri)
-//            mapIntent.setPackage("com.google.android.apps.maps")
-//            startActivity(mapIntent)
-//        }
 
-//        binding.viewImageView.load(defaultImage)
         val storageRef = Firebase.storage.reference
         val imageRef = storageRef.child(vm.image)
-        Log.e("HUMBERTO", vm.image)
         imageRef.downloadUrl.addOnSuccessListener {Uri->
 
             val imageURL = Uri.toString()
@@ -164,9 +152,6 @@ class ViewActivity : AppCompatActivity() {
                 .into(binding.viewImageView)
 
         }
-//        binding.viewImageView.load(imageref)
-//
-//        Glide.with(this).load(imageRef).into(binding.viewImageView)
 
         binding.viewGeoNotesEditText.setText(vm.geo_notes)
         binding.viewGeoNotesEditText.isEnabled = true
@@ -208,10 +193,6 @@ class ViewActivity : AppCompatActivity() {
             val geoNotes = binding.viewGeoNotesEditText.getText().toString()
             val extraNotes = binding.viewExtraNotesEditText.getText().toString()
             val curTime = Timestamp.now()
-            //val newVM = VendingMachine(uniqueID, badGeo, uniqueID, binding.geoNotesEditText.getText().toString(), binding.extraNotesEditText.getText().toString(), Timestamp.now(), )
-
-            //getCurrentLocation()
-            //badGeo = GeoPoint(myLat, myLng)
 
             //Design decision needed, reuse or update geo location of point? - HUMBERTO
             badGeo = vm.location
@@ -232,11 +213,8 @@ class ViewActivity : AppCompatActivity() {
             // Create a storage reference from our app
             val storageRef = storage.reference
 
-            // Create a reference to "mountains.jpg"
-            val mountainsRef = storageRef.child(uniqueID+".jpeg")
-
-            // Create a reference to 'images/mountains.jpg'
-            val mountainImagesRef = storageRef.child("images/"+uniqueID+".jpeg")
+            // Create reference for vending machine image
+            val vendRef = storageRef.child(uniqueID+".jpeg")
 
             // Get the data from an ImageView as bytes
 //            binding.submitImageView.isDrawingCacheEnabled = true
@@ -245,13 +223,16 @@ class ViewActivity : AppCompatActivity() {
             val baos = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
             val data = baos.toByteArray()
-            var uploadTask = mountainsRef.putBytes(data)
+            var uploadTask = vendRef.putBytes(data)
             uploadTask.addOnFailureListener {
                 // Handle unsuccessful uploads
+                Toast.makeText(this, "Upload failed.", Toast.LENGTH_SHORT).show()
             }.addOnSuccessListener { taskSnapshot ->
                 // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
                 // ...
+                Toast.makeText(this, "Upload successful!", Toast.LENGTH_SHORT).show()
             }
+            finish()
         }
 
     }

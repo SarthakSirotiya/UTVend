@@ -25,13 +25,17 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.google.gson.GsonBuilder
 import com.trescaballeros.utvend.databinding.ActivityGoogleMapBinding
+import com.trescaballeros.utvend.model.GeopointSerializer
+import com.trescaballeros.utvend.model.TimestampSerializer
 import com.trescaballeros.utvend.model.VendingMachine
 
 class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -135,7 +139,11 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(utAustin))
         mMap.moveCamera(CameraUpdateFactory.zoomTo(15F))
         mMap.setOnInfoWindowClickListener { marker ->
-            val gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+            val gson = GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeAdapter(Timestamp::class.java, TimestampSerializer())
+                .registerTypeAdapter(GeoPoint::class.java, GeopointSerializer())
+                .create()
             val vm = marker.tag as VendingMachine
             val viewIntent = Intent(this, ViewActivity::class.java)
             val json = gson.toJson(vm)
@@ -150,7 +158,6 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         FirebaseFirestore.getInstance().collection("vms_1").get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    Log.d("vm_map", document.toString())
                     val vm = document.toObject<VendingMachine>()
                     vm.id = document.id
                     vm.drawable =

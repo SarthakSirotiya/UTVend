@@ -10,25 +10,35 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.trescaballeros.utvend.R
 import com.trescaballeros.utvend.ViewActivity
+import com.trescaballeros.utvend.model.GeopointSerializer
 import com.trescaballeros.utvend.model.JavaVendingMachine
+import com.trescaballeros.utvend.model.TimestampSerializer
 
-class VendingMachineAdapter(private val context: Context, val options: FirestoreRecyclerOptions<JavaVendingMachine>)
-    : FirestoreRecyclerAdapter<JavaVendingMachine, VendingMachineAdapter.VendingMachineViewHolder>(options) {
+class VendingMachineAdapter(
+    private val context: Context,
+    val options: FirestoreRecyclerOptions<JavaVendingMachine>
+) : FirestoreRecyclerAdapter<JavaVendingMachine, VendingMachineAdapter.VendingMachineViewHolder>(
+    options
+) {
 
-    private val gson = Gson()
+    private val gson = GsonBuilder()
+        .registerTypeAdapter(GeoPoint::class.java, GeopointSerializer())
+        .registerTypeAdapter(Timestamp::class.java, TimestampSerializer())
+        .create()
     val storageRef = Firebase.storage.reference
 
-    class VendingMachineViewHolder(private val view: View?): RecyclerView.ViewHolder(view!!) {
+    class VendingMachineViewHolder(private val view: View?) : RecyclerView.ViewHolder(view!!) {
         var myView = view
 
         // Put views here, example from astire video
@@ -42,8 +52,8 @@ class VendingMachineAdapter(private val context: Context, val options: Firestore
     override fun onCreateViewHolder(parentGroup: ViewGroup, i: Int): VendingMachineViewHolder {
         // Create a new instance of the ViewHolder, in this case we are using a custom
         // layout called R.layout.message for each item
-        var view: View? = null
-        view = LayoutInflater.from(parentGroup.context).inflate(R.layout.vertical_card, parentGroup, false)
+        var view: View? = LayoutInflater.from(parentGroup.context)
+            .inflate(R.layout.vertical_card, parentGroup, false)
 
         return VendingMachineViewHolder(view)
     }
@@ -65,7 +75,6 @@ class VendingMachineAdapter(private val context: Context, val options: Firestore
         }
 
         holder.myView?.setOnClickListener {
-            Toast.makeText(context, model.timestamp.toString(), Toast.LENGTH_SHORT).show()
             val intent = Intent(context, ViewActivity::class.java)
             intent.putExtra("vm", gson.toJson(model))
             context.startActivity(intent)
