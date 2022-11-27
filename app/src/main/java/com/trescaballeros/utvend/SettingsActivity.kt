@@ -1,6 +1,7 @@
 package com.trescaballeros.utvend
 
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -38,10 +39,7 @@ class SettingsActivity : AppCompatActivity() {
     private fun selectTheme() {
         val ab = AlertDialog.Builder(this)
         ab.setTitle("Choose theme")
-        ab.setSingleChoiceItems(
-            arrayOf("Light", "Dark", "System Default"),
-            -1
-        ) { _, i ->
+        ab.setItems(arrayOf("Light", "Dark", "System Default")) { _, i ->
             setDefaultNightMode(
                 when (i) {
                     0 -> MODE_NIGHT_NO
