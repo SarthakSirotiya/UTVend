@@ -6,59 +6,59 @@
     android:layout_height="match_parent"
     tools:context=".ViewActivity">
 
-<!--    <ImageView-->
-<!--        android:id="@+id/vmImageView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="64dp"-->
-<!--        android:contentDescription="@string/vm_img_desc"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        tools:srcCompat="@tools:sample/avatars" />-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/vmImageView"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="64dp"-->
+    <!--        android:contentDescription="@string/vm_img_desc"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        tools:srcCompat="@tools:sample/avatars" />-->
 
-<!--    <TextView-->
-<!--        android:id="@+id/geoNotesTextView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="32dp"-->
-<!--        android:hint="@string/geo_notes"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/vmImageView" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/geoNotesTextView"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="32dp"-->
+    <!--        android:hint="@string/geo_notes"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/vmImageView" />-->
 
-<!--    <TextView-->
-<!--        android:id="@+id/extraNotesTextView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="32dp"-->
-<!--        android:text="@string/extra_notes"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/geoNotesTextView" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/extraNotesTextView"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="32dp"-->
+    <!--        android:text="@string/extra_notes"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/geoNotesTextView" />-->
 
-<!--    <ImageButton-->
-<!--        android:id="@+id/directionsButton"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="32dp"-->
-<!--        android:contentDescription="@string/directions_icon"-->
-<!--        android:minHeight="48dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/extraNotesTextView"-->
-<!--        app:srcCompat="@drawable/ic_baseline_directions_24" />-->
+    <!--    <ImageButton-->
+    <!--        android:id="@+id/directionsButton"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="32dp"-->
+    <!--        android:contentDescription="@string/directions_icon"-->
+    <!--        android:minHeight="48dp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/extraNotesTextView"-->
+    <!--        app:srcCompat="@drawable/ic_baseline_directions_24" />-->
 
-<!--    <TextView-->
-<!--        android:id="@+id/timestampTextView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="32dp"-->
-<!--        android:text="@string/timestamp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        android:textAppearance="@style/TextAppearance.Material3.LabelSmall"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/directionsButton" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/timestampTextView"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="32dp"-->
+    <!--        android:text="@string/timestamp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        android:textAppearance="@style/TextAppearance.Material3.LabelSmall"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/directionsButton" />-->
 
     <Button
         android:id="@+id/viewSubmitButton"
@@ -112,10 +112,21 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:scaleType="centerCrop"
+        android:src="@drawable/vending_machine_loading"
         app:layout_constraintBottom_toTopOf="@+id/viewGeoNotesEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/vending_machine_loading" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/directionsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_baseline_directions_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,7 @@ import android.location.Location
 import android.location.LocationManager
 import android.media.AudioAttributes
 import android.media.MediaPlayer
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -196,6 +197,14 @@ class ViewActivity : AppCompatActivity() {
 
         binding.viewExtraNotesEditText.addTextChangedListener {
             binding.viewSubmitButton.isEnabled = true
+        }
+
+        binding.directionsButton.setOnClickListener {
+            val uri = Uri.parse("google.navigation:q=${vm.location.latitude}," +
+                    "${vm.location.longitude}&mode=w")
+            val mapIntent = Intent(Intent.ACTION_VIEW, uri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+            startActivity(mapIntent)
         }
 
         binding.viewSubmitButton.setOnClickListener {
