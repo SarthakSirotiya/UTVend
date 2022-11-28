@@ -154,10 +154,12 @@ class SubmitActivity : AppCompatActivity(){
             chooserIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
             startActivityForResult(chooserIntent, PICK_IMAGE)
 
-
         }
 
         binding.submitSubmitButton.setOnClickListener {
+            // Set loading image
+            //binding.submitImageView.setImageResource(R.drawable.vending_machine_submit_loading)
+
             val uniqueID = UUID.randomUUID().toString()
             var badGeo = GeoPoint(0.0,0.0)
             val geoNotes = binding.submitGeoNotesEditText.getText().toString()

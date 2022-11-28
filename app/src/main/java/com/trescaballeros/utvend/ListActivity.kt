@@ -46,7 +46,7 @@ class ListActivity : AppCompatActivity() {
         // DO NOT DELETE -Manuel
         // Set up query and options with it
         val query: Query
-        = FirebaseFirestore.getInstance().collection("vms_1")
+        = FirebaseFirestore.getInstance().collection("vms_1").orderBy("timestamp", Query.Direction.DESCENDING)
         val options: FirestoreRecyclerOptions<JavaVendingMachine>
         = FirestoreRecyclerOptions.Builder<JavaVendingMachine>().setQuery(query, JavaVendingMachine::class.java).build()
 
