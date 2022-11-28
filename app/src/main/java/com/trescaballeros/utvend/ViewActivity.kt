@@ -65,17 +65,20 @@ class ViewActivity : AppCompatActivity() {
 
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener(this) {
                         task->val location: Location?=task.result
-                    if(location == null){
+                    /*if(location == null){
                         Toast.makeText(applicationContext,"Null Recieved", Toast.LENGTH_SHORT).show()
                     }else {
                         Toast.makeText(applicationContext, "Get Success", Toast.LENGTH_SHORT).show()
+                        myLat = location.latitude
+                        myLng = location.longitude
+                    }*/
+                    if (location != null) {
                         myLat = location.latitude
                         myLng = location.longitude
                     }
                 }
             } else {
                 //setting open here
-                Toast.makeText(applicationContext, "Turn on location", Toast.LENGTH_SHORT).show()
                 val intent=Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivity(intent)
             }
@@ -115,14 +118,14 @@ class ViewActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == PERMISSION_REQUEST_ACCESS_LOCATION) {
+        /*if(requestCode == PERMISSION_REQUEST_ACCESS_LOCATION) {
             if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 //DISPLAY TO USER THAT PERMISSION WAS GRANTED TOAST?
                 Toast.makeText(applicationContext, "Granted", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(applicationContext, "Denied", Toast.LENGTH_SHORT).show()
             }
-        }
+        }*/
     }
 
     companion object {

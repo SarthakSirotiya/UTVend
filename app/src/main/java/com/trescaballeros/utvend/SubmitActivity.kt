@@ -1,7 +1,8 @@
 package com.trescaballeros.utvend
 
+//import androidx.core.location.LocationManagerCompat.isLocationEnabled
+//import androidx.core.location.LocationManagerCompat.getCurrentLocation
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -18,11 +19,8 @@ import android.provider.Settings
 import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-//import androidx.core.location.LocationManagerCompat.isLocationEnabled
-//import androidx.core.location.LocationManagerCompat.getCurrentLocation
 import coil.load
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -61,10 +59,10 @@ class SubmitActivity : AppCompatActivity(){
 
                 if(ActivityCompat.checkSelfPermission(
                   this,
-                  android.Manifest.permission.ACCESS_FINE_LOCATION
+                  Manifest.permission.ACCESS_FINE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                         this,
-                        android.Manifest.permission.ACCESS_COARSE_LOCATION
+                        Manifest.permission.ACCESS_COARSE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED){
                     requestPermission()
                     return
@@ -72,17 +70,13 @@ class SubmitActivity : AppCompatActivity(){
 
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener(this) {
                     task->val location:Location?=task.result
-                    if(location == null){
-                        Toast.makeText(applicationContext,"Null Recieved", Toast.LENGTH_SHORT).show()
-                    }else {
-                        Toast.makeText(applicationContext, "Get Success", Toast.LENGTH_SHORT).show()
+                    if(location != null) {
                         myLat = location.latitude
                         myLng = location.longitude
                     }
                 }
             } else {
                 //setting open here
-                Toast.makeText(applicationContext, "Turn on location", Toast.LENGTH_SHORT).show()
                 val intent=Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivity(intent)
             }
@@ -100,8 +94,8 @@ class SubmitActivity : AppCompatActivity(){
     }
 
     private fun checkPermissions(): Boolean {
-        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-            && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             return true
         }
         return false
@@ -109,8 +103,8 @@ class SubmitActivity : AppCompatActivity(){
 
     private fun requestPermission() {
         ActivityCompat.requestPermissions(
-            this, arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                android.Manifest.permission.ACCESS_FINE_LOCATION),
+            this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION),
             PERMISSION_REQUEST_ACCESS_LOCATION
         )
     }
