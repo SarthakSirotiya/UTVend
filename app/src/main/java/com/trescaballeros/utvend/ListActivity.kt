@@ -49,12 +49,15 @@ class ListActivity : AppCompatActivity() {
 
 
         myAdapter = VendingMachineAdapter(this, options)
+
         val recyclerView = binding.recyclerViewId
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true) // maybe remove this
         recyclerView.adapter = myAdapter
         setTitle("list num: " +  myAdapter.itemCount)
         // XXX END
+
+
 
         binding.floatingButton.setOnClickListener {
             if (FirebaseAuth.getInstance().currentUser != null) {

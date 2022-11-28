@@ -3,6 +3,7 @@ package com.trescaballeros.utvend
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -90,6 +91,10 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        val mediaPlayer = MediaPlayer.create(this, R.raw.start_up)
+        mediaPlayer.setOnCompletionListener { val mine = 5 }
+        mediaPlayer.start()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import android.location.LocationManager
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -142,6 +143,13 @@ class ViewActivity : AppCompatActivity() {
         val vm: VendingMachine = gson.fromJson(intent.extras?.getString("vm"),
             VendingMachine::class.java) as VendingMachine
 
+        if(vm.id == ""){
+            //need to write in vm.id
+            vm.id = (vm.image.substring(0,vm.image.length-5))
+        }
+
+
+
         val storageRef = Firebase.storage.reference
         val imageRef = storageRef.child(vm.image)
         imageRef.downloadUrl.addOnSuccessListener {Uri->
@@ -175,7 +183,7 @@ class ViewActivity : AppCompatActivity() {
             chooserIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
             startActivityForResult(chooserIntent, PICK_IMAGE)
 
-            binding.viewSubmitButton.isEnabled = true
+//            binding.viewSubmitButton.isEnabled = true
         }
 
         binding.viewGeoNotesEditText.addTextChangedListener {
@@ -208,7 +216,14 @@ class ViewActivity : AppCompatActivity() {
                 "timestamp" to Timestamp(Date())
             )
 
-            FirebaseFirestore.getInstance().collection("vms_1").document(uniqueID).set(newVM)
+            //FirebaseFirestore.getInstance().collection("vms_1").document(uniqueID).set(newVM)
+
+            FirebaseFirestore.getInstance().collection("vms_1").document(vm.id).update("geo_notes", geoNotes,"extra_notes", extraNotes)
+
+
+
+
+
             val storage = Firebase.storage
             // Create a storage reference from our app
             val storageRef = storage.reference
@@ -226,13 +241,22 @@ class ViewActivity : AppCompatActivity() {
             var uploadTask = vendRef.putBytes(data)
             uploadTask.addOnFailureListener {
                 // Handle unsuccessful uploads
+                Log.e("HUMBERTO", "FAIL")
                 Toast.makeText(this, "Upload failed.", Toast.LENGTH_SHORT).show()
+                val mediaPlayer = MediaPlayer.create(this, R.raw.critical)
+                mediaPlayer.setOnCompletionListener { val mine = 5 }
+                mediaPlayer.start()
             }.addOnSuccessListener { taskSnapshot ->
                 // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
                 // ...
+                Log.e("HUMBERTO", "SUCCESS")
                 Toast.makeText(this, "Upload successful!", Toast.LENGTH_SHORT).show()
+                val mediaPlayer = MediaPlayer.create(this, R.raw.whoosh)
+                mediaPlayer.setOnCompletionListener { val mine = 5 }
+                mediaPlayer.start()
+                finish()
             }
-            finish()
+//            finish()
         }
 
     }
@@ -244,12 +268,14 @@ class ViewActivity : AppCompatActivity() {
                 val selectedImage = data?.getData()
                 binding.viewImageView.load(selectedImage)
                 binding.viewSubmitButton.isEnabled = true
+                binding.viewSelectButton.setText("SELECT AN IMAGE")
             }
         } else if(requestCode == 1) {
             if(resultCode == RESULT_OK) {
                 val selectedImage = data?.getData()
                 binding.viewImageView.load(selectedImage)
                 binding.viewSubmitButton.isEnabled = true
+                binding.viewSelectButton.setText("SELECT AN IMAGE")
             }
         }
     }
