@@ -135,9 +135,7 @@ class ListActivity : AppCompatActivity() {
         val signInIntent = AuthUI.getInstance()
             .createSignInIntentBuilder()
             .setAvailableProviders(providers)
-            //.setLogo() TODO add logo to login page
-            // should automatically use app default theme
-            // can add theme manually if necessary
+            .setLogo(R.drawable.ic_launcher_web) // TODO add logo to login page
             .build()
         signInLauncher.launch(signInIntent)
     }

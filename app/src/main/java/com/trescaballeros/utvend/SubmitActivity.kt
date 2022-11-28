@@ -12,7 +12,6 @@ import android.location.Location
 import android.location.LocationManager
 import android.media.AudioAttributes
 import android.media.MediaPlayer
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
@@ -40,7 +39,6 @@ import java.util.*
 class SubmitActivity : AppCompatActivity(){
     private lateinit var binding: ActivitySubmitBinding
     val PICK_IMAGE = 1
-    private lateinit var imageData: Uri
 //    private lateinit var locationManager: LocationManager
 //    private lateinit var tvGpsLocation: TextView
 //    private val locationPermissionCode = 2
@@ -144,12 +142,12 @@ class SubmitActivity : AppCompatActivity(){
             //getIntent.setAction(Intent.ACTION_GET_CONTENT)
             val pickIntent = Intent(
                 Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             )
             //pickIntent.setAction(Intent.ACTION_PICK)
             pickIntent.setType("image/*")
             val chooserIntent = Intent.createChooser(getIntent, getString(R.string.select_with))
-            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, Array<Intent>(1) { pickIntent })
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, Array(1) { pickIntent })
             val photoUri = 0
             chooserIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
             startActivityForResult(chooserIntent, PICK_IMAGE)
@@ -161,14 +159,12 @@ class SubmitActivity : AppCompatActivity(){
             //binding.submitImageView.setImageResource(R.drawable.vending_machine_submit_loading)
 
             val uniqueID = UUID.randomUUID().toString()
-            var badGeo = GeoPoint(0.0,0.0)
-            val geoNotes = binding.submitGeoNotesEditText.getText().toString()
-            val extraNotes = binding.submitExtraNotesEditText.getText().toString()
-            val curTime = Timestamp.now()
+            val geoNotes = binding.submitGeoNotesEditText.text.toString()
+            val extraNotes = binding.submitExtraNotesEditText.text.toString()
             //val newVM = VendingMachine(uniqueID, badGeo, uniqueID, binding.geoNotesEditText.getText().toString(), binding.extraNotesEditText.getText().toString(), Timestamp.now(), )
 
             getCurrentLocation()
-            badGeo = GeoPoint(myLat, myLng)
+            val badGeo = GeoPoint(myLat, myLng)
 
             //fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
             //getCurrentLocation()
@@ -176,7 +172,7 @@ class SubmitActivity : AppCompatActivity(){
             val newVM = hashMapOf(
                 "extra_notes" to extraNotes,
                 "geo_notes" to geoNotes,
-                "image" to uniqueID + ".jpeg",
+                "image" to "$uniqueID.jpeg",
                 "location" to badGeo,
                 "timestamp" to Timestamp(Date())
             )
@@ -187,10 +183,7 @@ class SubmitActivity : AppCompatActivity(){
             val storageRef = storage.reference
 
             // Create a reference to "mountains.jpg"
-            val mountainsRef = storageRef.child(uniqueID+".jpeg")
-
-            // Create a reference to 'images/mountains.jpg'
-            val mountainImagesRef = storageRef.child("images/"+uniqueID+".jpeg")
+            val mountainsRef = storageRef.child("$uniqueID.jpeg")
 
             // Get the data from an ImageView as bytes
 //            binding.submitImageView.isDrawingCacheEnabled = true
@@ -199,7 +192,7 @@ class SubmitActivity : AppCompatActivity(){
             val baos = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
             val data = baos.toByteArray()
-            var uploadTask = mountainsRef.putBytes(data)
+            val uploadTask = mountainsRef.putBytes(data)
             uploadTask.addOnFailureListener {
                 // Handle unsuccessful uploads
 
@@ -219,6 +212,7 @@ class SubmitActivity : AppCompatActivity(){
                 mediaPlayer.setOnCompletionListener {
                     mediaPlayer.release()
                     Toast.makeText(this, getString(R.string.upload_success), Toast.LENGTH_SHORT).show()
+                    finish()
                 }
                 mediaPlayer.setAudioAttributes(
                     AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
@@ -226,7 +220,6 @@ class SubmitActivity : AppCompatActivity(){
                 mediaPlayer.start()
 
             }
-//            finish()
         }
     }
 

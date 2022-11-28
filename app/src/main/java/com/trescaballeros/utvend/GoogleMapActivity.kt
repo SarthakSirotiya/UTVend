@@ -6,7 +6,6 @@ import android.content.Intent
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Looper.prepare
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -88,16 +87,17 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
             if (FirebaseAuth.getInstance().currentUser != null) {
                 val intent = Intent(this, SubmitActivity::class.java)
                 startActivity(intent)
-            }
-            else {
+            } else {
 
                 mediaPlayer = MediaPlayer.create(this, R.raw.critical)
                 mediaPlayer.setOnCompletionListener {
                     mediaPlayer.release()
-                    Toast.makeText(this, getString(R.string.please_login), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.please_login), Toast.LENGTH_SHORT)
+                        .show()
                 }
                 mediaPlayer.setAudioAttributes(
-                    AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
+                    AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .build()
                 )
                 mediaPlayer.start()
             }
@@ -108,7 +108,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        if(!CreatedState.isCreated) {
+        if (!CreatedState.isCreated) {
             mediaPlayer = MediaPlayer.create(this, R.raw.start_up)
             mediaPlayer.setOnCompletionListener { mediaPlayer.release() }
             mediaPlayer.setAudioAttributes(
@@ -162,7 +162,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        val utAustin = LatLng(30.2862815,-97.7370414)
+        val utAustin = LatLng(30.2862815, -97.7370414)
         loadVendingMachines()
         mMap.setInfoWindowAdapter(VMInfoWindow(this))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(utAustin))
@@ -218,9 +218,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         val signInIntent = AuthUI.getInstance()
             .createSignInIntentBuilder()
             .setAvailableProviders(providers)
-            //.setLogo() TODO add logo to login page
-            // should automatically use app default theme
-            // can add theme manually if necessary
+            .setLogo(R.drawable.ic_launcher_web) // TODO add logo to login page
             .build()
         signInLauncher.launch(signInIntent)
     }
@@ -228,7 +226,11 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         if (result.resultCode == Activity.RESULT_OK) {
             val user = FirebaseAuth.getInstance().currentUser
-            Toast.makeText(this, getString(R.string.Logged_in_as) + "${user?.displayName}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(R.string.Logged_in_as) + "${user?.displayName}",
+                Toast.LENGTH_SHORT
+            ).show()
         } else {
             Log.d("login", "error resultCode of ${result.resultCode}")
         }
