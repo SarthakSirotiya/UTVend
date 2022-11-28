@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import android.location.LocationManager
+import android.media.AudioAttributes
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -42,7 +43,7 @@ class ViewActivity : AppCompatActivity() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var myLat: Double = 0.0
     private var myLng: Double = 0.0
-
+    private lateinit var mediaPlayer: MediaPlayer
 
 
     private fun getCurrentLocation() {
@@ -241,20 +242,30 @@ class ViewActivity : AppCompatActivity() {
             var uploadTask = vendRef.putBytes(data)
             uploadTask.addOnFailureListener {
                 // Handle unsuccessful uploads
-                Log.e("HUMBERTO", "FAIL")
-                Toast.makeText(this, "Upload failed.", Toast.LENGTH_SHORT).show()
-                val mediaPlayer = MediaPlayer.create(this, R.raw.critical)
-                mediaPlayer.setOnCompletionListener { val mine = 5 }
+
+                mediaPlayer = MediaPlayer.create(this, R.raw.critical)
+                mediaPlayer.setOnCompletionListener {
+                    mediaPlayer.release()
+                    Toast.makeText(this, "Upload failed.", Toast.LENGTH_SHORT).show()
+                }
+                mediaPlayer.setAudioAttributes(
+                    AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
+                )
                 mediaPlayer.start()
             }.addOnSuccessListener { taskSnapshot ->
                 // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
                 // ...
-                Log.e("HUMBERTO", "SUCCESS")
-                Toast.makeText(this, "Upload successful!", Toast.LENGTH_SHORT).show()
-                val mediaPlayer = MediaPlayer.create(this, R.raw.whoosh)
-                mediaPlayer.setOnCompletionListener { val mine = 5 }
+
+                mediaPlayer = MediaPlayer.create(this, R.raw.whoosh)
+                mediaPlayer.setOnCompletionListener {
+                    mediaPlayer.release()
+                    Toast.makeText(this, "Upload successful!", Toast.LENGTH_SHORT).show()
+                }
+                mediaPlayer.setAudioAttributes(
+                    AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
+                )
                 mediaPlayer.start()
-                finish()
+
             }
 //            finish()
         }

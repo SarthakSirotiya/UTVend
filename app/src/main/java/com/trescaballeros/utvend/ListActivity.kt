@@ -2,6 +2,8 @@ package com.trescaballeros.utvend
 
 import android.app.Activity
 import android.content.Intent
+import android.media.AudioAttributes
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -32,6 +34,7 @@ class ListActivity : AppCompatActivity() {
             onSignInResult(res)
         }
     private lateinit var binding: ActivityListBinding
+    private lateinit var mediaPlayer: MediaPlayer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
@@ -65,7 +68,15 @@ class ListActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             else {
-                Toast.makeText(this, "Please log in first.", Toast.LENGTH_SHORT).show()
+                mediaPlayer = MediaPlayer.create(this, R.raw.critical)
+                mediaPlayer.setOnCompletionListener {
+                    mediaPlayer.release()
+                    Toast.makeText(this, "Please log in first.", Toast.LENGTH_SHORT).show()
+                }
+                mediaPlayer.setAudioAttributes(
+                    AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
+                )
+                mediaPlayer.start()
             }
         }
 

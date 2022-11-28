@@ -3,8 +3,10 @@ package com.trescaballeros.utvend
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Looper.prepare
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -39,10 +41,15 @@ import com.trescaballeros.utvend.model.GeopointSerializer
 import com.trescaballeros.utvend.model.TimestampSerializer
 import com.trescaballeros.utvend.model.VendingMachine
 
-class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
+object CreatedState {
+    var isCreated: Boolean = false
+}
 
+class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
+    private lateinit var mediaPlayer: MediaPlayer
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityGoogleMapBinding
+
     private val signInLauncher =
         registerForActivityResult(FirebaseAuthUIActivityResultContract()) { res ->
             onSignInResult(res)
@@ -83,7 +90,16 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 startActivity(intent)
             }
             else {
-                Toast.makeText(this, "Please log in first.", Toast.LENGTH_SHORT).show()
+
+                mediaPlayer = MediaPlayer.create(this, R.raw.critical)
+                mediaPlayer.setOnCompletionListener {
+                    mediaPlayer.release()
+                    Toast.makeText(this, "Please log in first.", Toast.LENGTH_SHORT).show()
+                }
+                mediaPlayer.setAudioAttributes(
+                    AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
+                )
+                mediaPlayer.start()
             }
         }
 
@@ -92,9 +108,17 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        val mediaPlayer = MediaPlayer.create(this, R.raw.start_up)
-        mediaPlayer.setOnCompletionListener { val mine = 5 }
-        mediaPlayer.start()
+        if(!CreatedState.isCreated) {
+            mediaPlayer = MediaPlayer.create(this, R.raw.start_up)
+            mediaPlayer.setOnCompletionListener { mediaPlayer.release() }
+            mediaPlayer.setAudioAttributes(
+                AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
+            )
+            mediaPlayer.start()
+            CreatedState.isCreated = true
+        }
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
