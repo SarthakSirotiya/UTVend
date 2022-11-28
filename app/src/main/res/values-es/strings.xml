@@ -51,9 +51,9 @@
     <string name="details">Detalles</string>
     <string name="upload_failed">Error en la Subida de Datos</string>
     <string name="upload_success">Subida de Datos Sin Falla</string>
-    <string name="prefix_where">"Donde: "</string>
-    <string name="prefix_notes">"Notas: "</string>
-    <string name="prefix_time">"Fecha de la Imagen: "</string>
+    <string name="prefix_where">"Donde: \n"</string>
+    <string name="prefix_notes">"Notas: \n"</string>
+    <string name="prefix_time">"Fecha de la Imagen: \n"</string>
     <string name="choose_lang">Elija un idioma</string>
     <string name="lang_default">(El idioma se establece como el predeterminado del sistema)</string>
 </resources>

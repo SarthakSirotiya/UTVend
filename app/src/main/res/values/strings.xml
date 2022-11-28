@@ -53,9 +53,9 @@
     <string name="upload_failed">Upload failed.</string>
     <string name="upload_success">Upload successful!</string>
     <string name="hard_error" translatable="false">ERROR</string>
-    <string name="prefix_where">"Where: "</string>
-    <string name="prefix_notes">"Notes: "</string>
-    <string name="prefix_time">"Date of Image: "</string>
+    <string name="prefix_where">"Where: \n"</string>
+    <string name="prefix_notes">"Notes: \n"</string>
+    <string name="prefix_time">"Date of Image: \n"</string>
     <string name="choose_lang">Choose language</string>
     <string name="english" translatable="false">English</string>
     <string name="espanol" translatable="false">Español</string>
