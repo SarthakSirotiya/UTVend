@@ -13,5 +13,51 @@
     <string name="directions_icon">directions icon</string>
     <string name="timestamp">timestamp</string>
     <string name="extra_notes">extra_notes</string>
-    <string name="geo_notes">geo_notes</string>
+    <string name="geo_notes">location_notes</string>
+    <string name="help">Help</string>
+    <string name="help_info">Help info goes here</string>
+    <string name="list_title">List</string>
+    <string name="please_login">Please log in first.</string>
+    <string name="Logged_in_as">"Logged in as: "</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="sign_out_success">Signed out successfully.</string>
+    <string name="sign_out_error">Something went wrong while signing out.</string>
+    <string name="confirm_delete">Confirm deletion</string>
+    <string name="double_check_delete">Do you really want to delete your account?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="account_deleted">Account deleted</string>
+    <string name="something_wrong">Something went wrong.</string>
+    <string name="change_theme">Change Theme</string>
+    <string name="english_spanish" translatable="false">English/Español</string>
+    <string name="doesnt_do_anything">this doesn\'t do anything yet either</string>
+    <string name="choose_theme">Choose theme</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="system_default">System Default</string>
+    <string name="submit">Submit</string>
+    <string name="select_image">Select an image</string>
+    <string name="null_received">Null Received</string>
+    <string name="get_success">Location Captured</string>
+    <string name="turn_on_location">Turn on location</string>
+    <string name="granted">Granted</string>
+    <string name="denied">Denied</string>
+    <string name="select_with">"Select With: "</string>
+    <string name="put_geo_note">Put location notes here</string>
+    <string name="put_extra_note">Put extra notes here</string>
+    <string name="update">Update</string>
+    <string name="details">Details</string>
+    <string name="upload_failed">Upload failed.</string>
+    <string name="upload_success">Upload successful!</string>
+    <string name="hard_error" translatable="false">ERROR</string>
+    <string name="prefix_where">"Where: "</string>
+    <string name="prefix_notes">"Notes: "</string>
+    <string name="prefix_time">"Date of Image: "</string>
+    <string name="choose_lang">Choose language</string>
+    <string name="english" translatable="false">English</string>
+    <string name="espanol" translatable="false">Español</string>
+    <string name="lang_default">(The language is set to the system default)</string>
 </resources>

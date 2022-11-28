@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
-            android:text="ERROR"
+            android:text="@string/hard_error"
             android:autoSizeTextType="uniform"
 
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
@@ -48,7 +48,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            android:text="ERROR"
+            android:text="@string/hard_error"
             app:layout_constraintStart_toEndOf="@id/image_id"
             app:layout_constraintTop_toBottomOf="@id/geo_notes_id" />
 
@@ -59,7 +59,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            android:text="ERROR"
+            android:text="@string/hard_error"
             app:layout_constraintStart_toEndOf="@id/image_id"
             app:layout_constraintTop_toBottomOf="@id/extra_notes_id" />
 

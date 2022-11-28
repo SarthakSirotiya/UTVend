@@ -63,10 +63,13 @@ class VendingMachineAdapter(
         position: Int,
         model: JavaVendingMachine
     ) {
-        // Only trying with one textview first
-        holder.geoTextView?.text = "Where: " + model.geo_notes
-        holder.extraTextView?.text = "Notes: " + model.extra_notes
-        holder.timeTextView?.text = "Image Taken: "+model.timestamp.toDate().toString()
+        // Set textviews
+        val geoText = context.getString(R.string.prefix_where) + model.geo_notes
+        val extraText = context.getString(R.string.prefix_notes) + model.extra_notes
+        val timeText = context.getString(R.string.prefix_time) + model.timestamp.toDate().toString()
+        holder.geoTextView?.text = geoText
+        holder.extraTextView?.text = extraText
+        holder.timeTextView?.text = timeText
 
         val pathRef = storageRef.child(model.image)
 

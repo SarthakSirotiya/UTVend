@@ -38,7 +38,7 @@ class ListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
-        setTitle("LIST_LIST") // TODO strings.xml spanish
+        setTitle(getString(R.string.list_title))
         binding = ActivityListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -57,7 +57,6 @@ class ListActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true) // maybe remove this
         recyclerView.adapter = myAdapter
-        setTitle("list num: " +  myAdapter.itemCount)
         // XXX END
 
 
@@ -71,7 +70,7 @@ class ListActivity : AppCompatActivity() {
                 mediaPlayer = MediaPlayer.create(this, R.raw.critical)
                 mediaPlayer.setOnCompletionListener {
                     mediaPlayer.release()
-                    Toast.makeText(this, "Please log in first.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.please_login), Toast.LENGTH_SHORT).show()
                 }
                 mediaPlayer.setAudioAttributes(
                     AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
@@ -146,7 +145,7 @@ class ListActivity : AppCompatActivity() {
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         if (result.resultCode == Activity.RESULT_OK) {
             val user = FirebaseAuth.getInstance().currentUser
-            Toast.makeText(this, "Logged in as ${user?.displayName}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.Logged_in_as) + "${user?.displayName}", Toast.LENGTH_SHORT).show()
         } else {
             Log.d("login", "error resultCode of ${result.resultCode}")
         }

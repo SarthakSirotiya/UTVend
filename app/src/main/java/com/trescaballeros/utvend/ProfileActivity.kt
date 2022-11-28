@@ -20,7 +20,7 @@ class ProfileActivity : AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        title = "Profile" // TODO strings.xml spanish
+        title = getString(R.string.profile)
 
         // assuming user non-null b/c user was non-null in MainActivity
         user = Firebase.auth.currentUser!!
@@ -58,11 +58,11 @@ class ProfileActivity : AppCompatActivity() {
             .signOut(this)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "Signed out successfully.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.sign_out_success), Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(
                         this,
-                        "Something went wrong while signing out.",
+                        getString(R.string.sign_out_error),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -72,10 +72,10 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun deleteAccountPrompt() {
         val adBuilder = AlertDialog.Builder(this)
-        adBuilder.setTitle("Confirm deletion")
-        adBuilder.setMessage("Do you really want to delete your account?")
-        adBuilder.setPositiveButton("Yes") { _, _ -> deleteAccount() }
-        adBuilder.setNegativeButton("No") { _, _ -> }
+        adBuilder.setTitle(getString(R.string.confirm_delete))
+        adBuilder.setMessage(getString(R.string.double_check_delete))
+        adBuilder.setPositiveButton(getString(R.string.yes)) { _, _ -> deleteAccount() }
+        adBuilder.setNegativeButton(getString(R.string.no)) { _, _ -> }
         adBuilder.show()
     }
 
@@ -84,9 +84,9 @@ class ProfileActivity : AppCompatActivity() {
             .delete()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "Account deleted", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.account_deleted), Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(this, "Something went wrong.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.something_wrong), Toast.LENGTH_SHORT).show()
                 }
             }
         finish()

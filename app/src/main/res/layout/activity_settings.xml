@@ -10,18 +10,19 @@
         android:id="@+id/themeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change Theme"
+        android:text="@string/change_theme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/languageButton"
+    <TextView
+        android:id="@+id/languageText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="English/Spanish"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/lang_default"
+        app:layout_constraintTop_toBottomOf="@id/themeButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/themeButton" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

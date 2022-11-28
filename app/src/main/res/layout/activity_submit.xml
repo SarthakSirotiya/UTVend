@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="false"
-        android:text="Submit"
+        android:text="@string/submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -20,7 +20,7 @@
         android:id="@+id/submitSelectButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select an image"
+        android:text="@string/select_image"
         app:layout_constraintBottom_toTopOf="@+id/submitSubmitButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

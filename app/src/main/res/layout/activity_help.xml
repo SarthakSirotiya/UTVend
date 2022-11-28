@@ -13,6 +13,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Help info goes here"/>
+        android:text="@string/help_info"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

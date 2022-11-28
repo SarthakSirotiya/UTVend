@@ -1,16 +1,21 @@
 package com.trescaballeros.utvend
 
 import android.app.AlertDialog
-import android.content.DialogInterface
+import android.content.res.Configuration
+import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
 import com.trescaballeros.utvend.databinding.ActivitySettingsBinding
+import java.util.*
+
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
+    var systemLanguage: String = Locale.getDefault().language
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
@@ -20,13 +25,9 @@ class SettingsActivity : AppCompatActivity() {
             selectTheme()
         }
 
-        binding.languageButton.setOnClickListener {
-            Toast.makeText(this, "this doesn't do anything yet either", Toast.LENGTH_SHORT).show()
-        }
-
         // Lab3
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        setTitle("SETTINGS") // TODO strings.xml spanish
+        title = getString(R.string.settings)
 
 
     }
@@ -38,8 +39,9 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun selectTheme() {
         val ab = AlertDialog.Builder(this)
-        ab.setTitle("Choose theme")
-        ab.setItems(arrayOf("Light", "Dark", "System Default")) { _, i ->
+        ab.setTitle(getString(R.string.choose_theme))
+        ab.setItems(arrayOf(getString(R.string.light), getString(R.string.dark),
+            getString(R.string.system_default))) { _, i ->
             setDefaultNightMode(
                 when (i) {
                     0 -> MODE_NIGHT_NO

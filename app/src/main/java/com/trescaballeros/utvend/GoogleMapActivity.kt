@@ -82,7 +82,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
 
         // Lab3
-        title = "Map" // TODO strings.xml spanish
+        title = getString(R.string.map)
 
         binding.floatingButton.setOnClickListener {
             if (FirebaseAuth.getInstance().currentUser != null) {
@@ -94,7 +94,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 mediaPlayer = MediaPlayer.create(this, R.raw.critical)
                 mediaPlayer.setOnCompletionListener {
                     mediaPlayer.release()
-                    Toast.makeText(this, "Please log in first.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.please_login), Toast.LENGTH_SHORT).show()
                 }
                 mediaPlayer.setAudioAttributes(
                     AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
@@ -228,7 +228,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         if (result.resultCode == Activity.RESULT_OK) {
             val user = FirebaseAuth.getInstance().currentUser
-            Toast.makeText(this, "Logged in as ${user?.displayName}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.Logged_in_as) + "${user?.displayName}", Toast.LENGTH_SHORT).show()
         } else {
             Log.d("login", "error resultCode of ${result.resultCode}")
         }

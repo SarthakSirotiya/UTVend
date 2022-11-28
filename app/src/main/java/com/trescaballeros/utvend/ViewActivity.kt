@@ -139,7 +139,7 @@ class ViewActivity : AppCompatActivity() {
         binding = ActivityViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        title = "Details"
+        title = getString(R.string.details)
         val gson = GsonBuilder()
             .registerTypeAdapter(Timestamp::class.java, TimestampSerializer())
             .registerTypeAdapter(GeoPoint::class.java, GeopointSerializer())
@@ -181,7 +181,7 @@ class ViewActivity : AppCompatActivity() {
             )
             //pickIntent.setAction(Intent.ACTION_PICK)
             pickIntent.setType("image/*")
-            val chooserIntent = Intent.createChooser(getIntent, "Select With:")
+            val chooserIntent = Intent.createChooser(getIntent, getString(R.string.select_with))
             chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, Array<Intent>(1) { pickIntent })
             val photoUri = 0
             chooserIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
@@ -249,7 +249,7 @@ class ViewActivity : AppCompatActivity() {
                 mediaPlayer = MediaPlayer.create(this, R.raw.critical)
                 mediaPlayer.setOnCompletionListener {
                     mediaPlayer.release()
-                    Toast.makeText(this, "Upload failed.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.upload_failed), Toast.LENGTH_SHORT).show()
                 }
                 mediaPlayer.setAudioAttributes(
                     AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
@@ -262,7 +262,7 @@ class ViewActivity : AppCompatActivity() {
                 mediaPlayer = MediaPlayer.create(this, R.raw.whoosh)
                 mediaPlayer.setOnCompletionListener {
                     mediaPlayer.release()
-                    Toast.makeText(this, "Upload successful!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.upload_success), Toast.LENGTH_SHORT).show()
                 }
                 mediaPlayer.setAudioAttributes(
                     AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
@@ -282,14 +282,14 @@ class ViewActivity : AppCompatActivity() {
                 val selectedImage = data?.getData()
                 binding.viewImageView.load(selectedImage)
                 binding.viewSubmitButton.isEnabled = true
-                binding.viewSelectButton.setText("SELECT AN IMAGE")
+                binding.viewSelectButton.setText(getString(R.string.select_image))
             }
         } else if(requestCode == 1) {
             if(resultCode == RESULT_OK) {
                 val selectedImage = data?.getData()
                 binding.viewImageView.load(selectedImage)
                 binding.viewSubmitButton.isEnabled = true
-                binding.viewSelectButton.setText("SELECT AN IMAGE")
+                binding.viewSelectButton.setText(getString(R.string.select_image))
             }
         }
     }

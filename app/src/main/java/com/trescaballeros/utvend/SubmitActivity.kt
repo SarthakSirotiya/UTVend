@@ -118,9 +118,9 @@ class SubmitActivity : AppCompatActivity(){
         if(requestCode == PERMISSION_REQUEST_ACCESS_LOCATION) {
             if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 //DISPLAY TO USER THAT PERMISSION WAS GRANTED TOAST?
-                Toast.makeText(applicationContext, "Granted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, getString(R.string.granted), Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(applicationContext, "Denied", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, getString(R.string.denied), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -134,7 +134,7 @@ class SubmitActivity : AppCompatActivity(){
         setContentView(R.layout.activity_submit)
         binding = ActivitySubmitBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setTitle("Submit")
+        setTitle(getString(R.string.submit))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         getCurrentLocation()
@@ -148,7 +148,7 @@ class SubmitActivity : AppCompatActivity(){
             )
             //pickIntent.setAction(Intent.ACTION_PICK)
             pickIntent.setType("image/*")
-            val chooserIntent = Intent.createChooser(getIntent, "Select With:")
+            val chooserIntent = Intent.createChooser(getIntent, getString(R.string.select_with))
             chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, Array<Intent>(1) { pickIntent })
             val photoUri = 0
             chooserIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
@@ -204,7 +204,7 @@ class SubmitActivity : AppCompatActivity(){
                 mediaPlayer = MediaPlayer.create(this, R.raw.critical)
                 mediaPlayer.setOnCompletionListener {
                     mediaPlayer.release()
-                    Toast.makeText(this, "Upload failed.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.upload_failed), Toast.LENGTH_SHORT).show()
                 }
                 mediaPlayer.setAudioAttributes(
                     AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
@@ -216,7 +216,7 @@ class SubmitActivity : AppCompatActivity(){
                 mediaPlayer = MediaPlayer.create(this, R.raw.whoosh)
                 mediaPlayer.setOnCompletionListener {
                     mediaPlayer.release()
-                    Toast.makeText(this, "Upload successful!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.upload_success), Toast.LENGTH_SHORT).show()
                 }
                 mediaPlayer.setAudioAttributes(
                     AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
@@ -240,9 +240,9 @@ class SubmitActivity : AppCompatActivity(){
                 binding.submitImageView.load(selectedImage)
                 binding.submitSubmitButton.isEnabled = true
                 binding.submitGeoNotesEditText.isEnabled = true
-                binding.submitGeoNotesEditText.setHint("Put geo notes here")
+                binding.submitGeoNotesEditText.setHint(getString(R.string.put_geo_note))
                 binding.submitExtraNotesEditText.isEnabled = true
-                binding.submitExtraNotesEditText.setHint("Put extra notes here")
+                binding.submitExtraNotesEditText.setHint(getString(R.string.put_extra_note))
             }
         } else if(requestCode == 1) {
             if(resultCode == RESULT_OK) {
@@ -250,9 +250,9 @@ class SubmitActivity : AppCompatActivity(){
                 binding.submitImageView.load(selectedImage)
                 binding.submitSubmitButton.isEnabled = true
                 binding.submitGeoNotesEditText.isEnabled = true
-                binding.submitGeoNotesEditText.setHint("Put geo notes here")
+                binding.submitGeoNotesEditText.setHint(getString(R.string.put_geo_note))
                 binding.submitExtraNotesEditText.isEnabled = true
-                binding.submitExtraNotesEditText.setHint("Put extra notes here")
+                binding.submitExtraNotesEditText.setHint(getString(R.string.put_extra_note))
             }
         }
     }

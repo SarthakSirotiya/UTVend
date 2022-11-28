@@ -12,7 +12,7 @@ class HelpActivity : AppCompatActivity() {
         binding = ActivityHelpBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        title = "Help"
+        title = getString(R.string.help)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
