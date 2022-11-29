@@ -66,7 +66,8 @@ class VendingMachineAdapter(
         // Set textviews
         val geoText = context.getString(R.string.prefix_where) + model.geo_notes
         val extraText = context.getString(R.string.prefix_notes) + model.extra_notes
-        val timeText = context.getString(R.string.prefix_time) + model.timestamp.toDate().toString()
+        // get rid of day of week code with substring(4)
+        val timeText = context.getString(R.string.prefix_time) + model.timestamp.toDate().toString().substring(4)
         holder.geoTextView?.text = geoText
         holder.extraTextView?.text = extraText
         holder.timeTextView?.text = timeText
